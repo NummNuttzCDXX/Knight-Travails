@@ -1,0 +1,20 @@
+{
+  "name": "knight-travails",
+  "version": "1.0.0",
+  "description": "An Odin Assignment demonstrating how to use data structures to find the shortest path between 2 points that a Knight can make in chess",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "npx webpack --watch --mode development",
+    "live": "git subtree push --prefix dist origin gh-pages"
+  },
+  "keywords": [],
+  "author": "BBirdy",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.47.0",
+    "eslint-config-google": "^0.14.0",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  }
+}
