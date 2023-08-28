@@ -79,17 +79,15 @@ class Graph {
 
 			// Work backwards and push the path to array
 			if (distance == current.distance) {
-				console.log('Current Distance:', current.distance);
 				path.push(current.node.coord);
 				if (current.prev === null) break;
 				// Rotate vars
 				current = previous;
 				previous = current.prev;
 			} else {
+				// Error check
 				console.error('Distances dont match, check log');
 			}
-
-			// If current node is the starting point
 		}
 
 		return path.reverse();
