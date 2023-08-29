@@ -1,5 +1,6 @@
 // Dom Manipulation Module
 import knight from '../dist/assets/img/Chess-Knight.svg';
+import close from '../dist/assets/img/close.svg';
 
 
 export const dom = (() => {
@@ -30,5 +31,26 @@ export const dom = (() => {
 		}
 	};
 
-	return {placeKnight};
+	/**
+	 * Place an X on the endpoint
+	 * - Where you want the Knight to go
+	 *
+	 * @param {HTMLDivElement} space Cell to place endpoint
+	 */
+	const placeEndpoint = (space) => {
+		// If there isnt already an Endpoint placed
+		if (!document.querySelector('.endpoint')) {
+			// Create endpoint
+			const img = new Image();
+			img.src = close;
+			img.alt = 'Endpoint';
+			img.classList.add('endpoint');
+			img.style.width = space.clientWidth - 5 + 'px';
+
+			// Add img to cell
+			space.appendChild(img);
+		}
+	};
+
+	return {placeKnight, placeEndpoint};
 })();

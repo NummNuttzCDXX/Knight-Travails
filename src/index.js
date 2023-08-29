@@ -39,3 +39,13 @@ placeKnightBtn.addEventListener('click', () => {
 		});
 	});
 });
+
+// Place Endpoint
+const endpointBtn = document.querySelector('.end');
+endpointBtn.addEventListener('click', () => {
+	const cells = document.querySelectorAll('.cell'); // Get cells
+	// Place 'X' on cell when its clicked
+	cells.forEach((cell) => cell.addEventListener('click', () => {
+		dom.placeEndpoint(cell);
+	}));
+});
