@@ -93,6 +93,10 @@ body {
 
 .cell {
 	flex: 1;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .white {
@@ -106,6 +110,10 @@ body {
 /* Knight will be placed relative to gameboard */
 .knight {
 	position: absolute;
+}
+
+.endpoint {
+	filter: invert(18%) sepia(67%) saturate(5060%) hue-rotate(347deg) brightness(79%) contrast(111%);
 }
 
 footer {
