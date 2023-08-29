@@ -79,6 +79,8 @@ body {
 	justify-content: space-between;
 
 	border: 1rem solid black;
+
+	position: relative;
 }
 
 .row {
@@ -99,6 +101,11 @@ body {
 
 .black {
 	background-color: var(--dark-cell);
+}
+
+/* Knight will be placed relative to gameboard */
+.knight {
+	position: absolute;
 }
 
 footer {
