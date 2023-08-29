@@ -8,7 +8,7 @@
  * the Knight can move from A to B in a single move. So the branches
  * in the graph will be the path a Knight can make on the board
  */
-class Graph {
+export class Graph {
 	/**
 	 * Construct a `Graph` to connect the spaces a knight
 	 * can move to in chess
@@ -18,6 +18,14 @@ class Graph {
 	 */
 	constructor(arr = []) {
 		if (arr.length == 0) {
+			/**
+			 * Tripple nested Array
+			 * - First: Container Array
+			 * - Second: Array representing `rows` on the gameboard
+			 * - Third: The `rows` holds the `cells` or `Nodes`
+			 *		- `Node`s will be `Node` objects with coordinates at
+			 *		`node.coord`
+			 */
 			this.nodes = createPaths();
 		} else {
 			this.nodes = createPaths(arr);
@@ -91,6 +99,12 @@ class Graph {
 		}
 
 		return path.reverse();
+	};
+
+	unvisitNodes = () => {
+		this.nodes.forEach((row) => row.forEach((node) => {
+			node.unvisit();
+		}));
 	};
 }
 
@@ -189,15 +203,21 @@ const createPaths = (arr = [], node) => {
  * - The `Node`s will branch out and connect to other Nodes that the
  * Knight can move to from that space
  */
-class Node {
+export class Node {
 	/**
 	 * Node/vertex constructor
 	 * @param {number[]} coords An array of x, y coordinates
 	 * representing the position on the gameboard
 	 * - [x, y]
+	 * @param {HTMLDivElement} [cell] Corrosponding cell on the gameboard
+	 * that the Node represents
 	 */
-	constructor(coords) {
+	constructor(coords, cell) {
 		this.coord = coords;
+
+		if (cell != undefined) this.cell = cell;
+		else this.cell = null;
+
 		this.visited = false;
 		/* Below will be the different branches a node can have
 		- The names will be the position on a clock face
@@ -216,4 +236,11 @@ class Node {
 		this.ten = null;
 		this.eleven = null;
 	}
+
+	/**
+	 * Un-visit node
+	 * - Set `node.visited` to false
+	 * @return {void}
+	 */
+	unvisit = () => this.visited = false;
 }
