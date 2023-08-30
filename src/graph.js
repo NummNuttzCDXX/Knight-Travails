@@ -49,14 +49,15 @@ export class Graph {
 		if (start instanceof Node) start = {node: start, distance: 0, prev: null};
 		const dist = start.distance + 1;
 
-		// Base Case - WIP - Else visit node
+		// Base Case Else visit node
 		if (start.node == end) return start;
 		else start.node.visited = true;
 
 		// Enqueue possible moves
 		for (const move in start.node) {
 			// Filter through unwanted properties
-			if (move !== 'coord' && move !== 'visited' && start.node[move] !== null) {
+			if (move !== 'coord' && move !== 'visited' && move != 'cell' &&
+			start.node[move] !== null) {
 				// If node is not visited
 				if (!start.node[move].visited) {
 					// Save the node, distance, and previous node and push to queue
@@ -73,7 +74,7 @@ export class Graph {
 		/* After traversing through the graph and the 'end' is found,
 		This will be an object thats 'linked' to the previous Nodes in the graph,
 		like a backwards linked list */
-		const link = this.breadthFirst(queue.shift(), end, queue);
+		const link = this.getPath(queue.shift(), end, queue);
 		// If the Nodes are already iterated through/path is saved, return it
 		if (link instanceof Array) return link;
 
@@ -105,6 +106,20 @@ export class Graph {
 		this.nodes.forEach((row) => row.forEach((node) => {
 			node.unvisit();
 		}));
+	};
+
+	/**
+	 * Convert the given Cell element to its corrosponding `Node` in the graph
+	 *
+	 * @param {HTMLDivElement} element Cell on gameboard to convert
+	 *
+	 * @return {Node}
+	 */
+	convertElementToNode = (element) => {
+		const x = element.id;
+		const y = element.parentElement.id;
+
+		return this.nodes[y][x];
 	};
 }
 
