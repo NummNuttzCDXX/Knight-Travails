@@ -121,6 +121,17 @@ export class Graph {
 
 		return this.nodes[y][x];
 	};
+
+	/**
+	 * Get the `coordinates` corrosponding `Node`
+	 *
+	 * @param {Number[]} coord Coordinates
+	 *
+	 * @return {Node}
+	 */
+	getNodeFromCoord = (coord) => {
+		return this.nodes[coord[1]][coord[0]];
+	};
 }
 
 /**
