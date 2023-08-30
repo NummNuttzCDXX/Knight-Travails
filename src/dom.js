@@ -1,6 +1,7 @@
 // Dom Manipulation Module
 import knight from '../dist/assets/img/Chess-Knight.svg';
 import close from '../dist/assets/img/close.svg';
+import {graph} from './index';
 
 
 export const dom = (() => {
@@ -45,7 +46,7 @@ export const dom = (() => {
 			img.src = close;
 			img.alt = 'Endpoint';
 			img.classList.add('endpoint');
-			img.style.width = space.clientWidth - 5 + 'px';
+			img.style.width = space.clientWidth - 20 + 'px';
 
 			// Add img to cell
 			space.appendChild(img);
@@ -108,14 +109,16 @@ export const dom = (() => {
 			} else {
 				console.error('Error animating Y coord');
 			}
-
-			// Rotate current
-			current = next;
 		}).then(() => {
 			return sleep(500); // Wait half a second
 		// Then animate next move through recursion
-		}).then(() => animateKnight(current, path, ++i));
-		// }
+		}).then(() => {
+			// Put move number inside `Cell` on gameboard
+			graph.getNodeFromCoord(next).cell
+				.querySelector('span').textContent = i;
+
+			animateKnight(next, path, ++i);
+		});
 
 		/**
 			 * Sleep for `milliseconds` long
