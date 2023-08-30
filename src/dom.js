@@ -6,6 +6,20 @@ import {graph} from './index';
 
 export const dom = (() => {
 	/**
+	 * Display the moves a Knight should take to get from
+	 * `start` to `end`
+	 * - This should be called once a `Start` point and an `Endpoint`
+	 * are placed on the board
+	 *
+	 * @param {Node} start Starting Node
+	 * @param {Node} end Ending Node
+	 */
+	const knightMoves = (start, end) => {
+		const path = graph.getPath(start, end);
+		animateKnight(path[0], path);
+	};
+
+	/**
 	 * Place Knight image on the gameboard
 	 * at `space`
 	 *
@@ -133,5 +147,5 @@ export const dom = (() => {
 		}
 	};
 
-	return {placeKnight, placeEndpoint, animateKnight};
+	return {placeKnight, placeEndpoint, knightMoves};
 })();
