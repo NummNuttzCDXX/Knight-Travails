@@ -26,7 +26,7 @@ for (let y = 0; y < 8; y++) {
 
 	board.push(row);
 };
-const graph = new Graph(board);
+export const graph = new Graph(board);
 
 // Place Knight
 let start;
@@ -59,12 +59,46 @@ endpointBtn.addEventListener('click', () => {
 
 			// Save endpoint, convert end `cell` to corrosponding `Node`
 			end = graph.convertElementToNode(cell);
-
-			// Get moves
-			const path = graph.getPath(start, end);
-
-			// Animate Knight
-			dom.animateKnight(path[0], path);
 		}
 	}));
 });
+
+// Random Endpoint
+const randomPoint = document.querySelector('.random-end');
+randomPoint.addEventListener('click', () => {
+	if (!document.querySelector('.endpoint')) {
+		const x = Math.floor(Math.random() * 7); // Get random X
+		const y = Math.floor(Math.random() * 7); // Get random Y
+		const cell = rowElements[y].children[x]; // Find cell
+
+		end = graph.convertElementToNode(cell); // Save and convert cell to node
+
+		dom.placeEndpoint(cell); // Place endpoint
+	}
+});
+
+// Move Knight once both Start and Endpoints are on the board
+const gameboard = document.querySelector('.gameboard');
+// Signifies if Knight and Endpoint is on the board
+let k = false;
+let e = false;
+const observer = new MutationObserver((records) => {
+	records.forEach((record) => {
+		const added = Array.from(record.addedNodes);
+
+		// If Knight is added
+		if (added.includes(document.querySelector('.knight'))) k = true;
+
+		// If endpoint is added
+		if (added.includes(document.querySelector('.endpoint'))) e = true;
+
+		// If both are on the board, move knight and reset vars
+		if (k && e) {
+			dom.knightMoves(start, end);
+			k = false;
+			e = false;
+		}
+	});
+});
+
+observer.observe(gameboard, {childList: true, subtree: true});
