@@ -110,6 +110,7 @@ body {
 /* Knight will be placed relative to gameboard */
 .knight {
 	position: absolute;
+	transition: .5s;
 }
 
 .endpoint {
