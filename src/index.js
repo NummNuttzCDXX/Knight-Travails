@@ -29,23 +29,42 @@ for (let y = 0; y < 8; y++) {
 const graph = new Graph(board);
 
 // Place Knight
+let start;
 const placeKnightBtn = document.querySelector('.place');
 placeKnightBtn.addEventListener('click', () => {
 	const spaces = document.querySelectorAll('.cell');
 	spaces.forEach((space) => {
 		space.addEventListener('click', function place() {
-			dom.placeKnight(space);
-			spaces.forEach((space) => space.removeEventListener('click', place));
+			// If theres no knight
+			if (!document.querySelector('.knight')) {
+				dom.placeKnight(space); // Place Knight Img
+
+				// Save start point, convert starting `cell` to corrosponding `Node`
+				start = graph.convertElementToNode(space);
+			}
 		});
 	});
 });
 
 // Place Endpoint
+let end;
 const endpointBtn = document.querySelector('.end');
 endpointBtn.addEventListener('click', () => {
 	const cells = document.querySelectorAll('.cell'); // Get cells
 	// Place 'X' on cell when its clicked
 	cells.forEach((cell) => cell.addEventListener('click', () => {
-		dom.placeEndpoint(cell);
+		// If theres no endpoint
+		if (!document.querySelector('.endpoint')) {
+			dom.placeEndpoint(cell); // Place endpoint
+
+			// Save endpoint, convert end `cell` to corrosponding `Node`
+			end = graph.convertElementToNode(cell);
+
+			// Get moves
+			const path = graph.getPath(start, end);
+
+			// Animate Knight
+			dom.animateKnight(path[0], path);
+		}
 	}));
 });

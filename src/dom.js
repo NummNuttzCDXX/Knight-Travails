@@ -52,5 +52,83 @@ export const dom = (() => {
 		}
 	};
 
-	return {placeKnight, placeEndpoint};
+	/**
+	 * Animate the Knight to move from `start` to `end`,
+	 * taking the quickest path
+	 *
+	 * @param {Number[]} current Current coordinate
+	 * @param {Array[]} path  Array of Coordinates representing the path you
+	 * should take
+	 * @param {Number} [i]
+	 */
+	const animateKnight = (current, path, i = 1) => {
+		if (i === path.length) return;
+		const knight = document.querySelector('.knight'); // Get Knight
+		const width = document.querySelector('.cell').clientWidth; // Get width
+
+		const next = path[i]; // Get next node
+		// Get the 'left' and 'bottom' props off Knight, just the number of pxs
+		const knightLeft = Number(knight.style.left.replace(/px/, ''));
+		const knightBottom = Number(knight.style.bottom.replace(/px/, ''));
+
+		// Wait half a second and move X coord
+		sleep(500).then(() => {
+			/* Compare current position and the next X coord
+			If next X is current X + 1 */
+			if (next[0] === current[0] + 1) {
+			// Add one spaces worth of pixels to 'left' prop
+			// Sliding the knight one space to the left
+				knight.style.left = knightLeft + width + 'px';
+			} else if (next[0] === current[0] - 1) {
+			// Slide Knight one space to the right
+				knight.style.left = knightLeft - width + 'px';
+			} else if (next[0] === current[0] + 2) {
+			// Slide Knight 2 spaces to the left
+				knight.style.left = knightLeft + (width * 2) + 'px';
+			} else if (next[0] === current[0] - 2) {
+			// Slide Knight 2 spaces to the right
+				knight.style.left = knightLeft - (width * 2) + 'px';
+			} else {
+				console.error('Error animating X coord');
+			}
+		}).then(() => {
+			return sleep(500); // Wait half a second then move Y coord
+		}).then(() => {
+			/* Compare current position and the next Y coord
+			If next Y is current Y + 1 */
+			if (next[1] === current[1] + 1) {
+			// Slide Knight one space up
+				knight.style.bottom = knightBottom + width + 'px';
+			} else if (next[1] === current[1] - 1) {
+				knight.style.bottom = knightBottom - width + 'px';
+			} else if (next[1] === current[1] + 2) {
+				knight.style.bottom = knightBottom + (width * 2) + 'px';
+			} else if (next[1] === current[1] - 2) {
+				knight.style.bottom = knightBottom - (width * 2) + 'px';
+			} else {
+				console.error('Error animating Y coord');
+			}
+
+			// Rotate current
+			current = next;
+		}).then(() => {
+			return sleep(500); // Wait half a second
+		// Then animate next move through recursion
+		}).then(() => animateKnight(current, path, ++i));
+		// }
+
+		/**
+			 * Sleep for `milliseconds` long
+			 * - Pause the execution of code for the specified time
+			 *
+			 * @param {Number} ms Milliseconds to pause for
+			 *
+			 * @return {Promise}
+			 */
+		function sleep(ms) {
+			return new Promise((resolve) => setTimeout(resolve, ms));
+		}
+	};
+
+	return {placeKnight, placeEndpoint, animateKnight};
 })();
