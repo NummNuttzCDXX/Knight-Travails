@@ -74,7 +74,7 @@ randomKnight.addEventListener('click', () => {
 	if (knight && endpoint) dom.resetBoard();
 	else if (knight) knight.remove();
 
-	if (!knight) {
+	if (!document.querySelector('.knight')) {
 		const rows = document.querySelectorAll('.row');
 		const x = Math.floor(Math.random() * 7);
 		const y = Math.floor(Math.random() * 7);
@@ -127,7 +127,7 @@ randomPoint.addEventListener('click', () => {
 	if (knight && endpoint) dom.resetBoard();
 	else if (endpoint) endpoint.remove();
 
-	if (!endpoint) {
+	if (!document.querySelector('.endpoint')) {
 		const rows = document.querySelectorAll('.row');
 		const x = Math.floor(Math.random() * 7); // Get random X
 		const y = Math.floor(Math.random() * 7); // Get random Y
