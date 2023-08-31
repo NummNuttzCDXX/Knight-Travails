@@ -173,6 +173,11 @@ export const dom = (() => {
 
 		// Relink Nodes to new Cells
 		graph.linkToElements();
+
+		// Enable btns
+		document.querySelectorAll('.console button').forEach((btn) => {
+			btn.disabled = false;
+		});
 	};
 
 	return {placeKnight, placeEndpoint, knightMoves, resetBoard};

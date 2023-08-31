@@ -30,8 +30,22 @@ export const graph = new Graph(board);
 
 // Place Knight
 let start;
+const btns = document.querySelectorAll('.console button');
 const placeKnightBtn = document.querySelector('.place');
 placeKnightBtn.addEventListener('click', () => {
+	// Disable other buttons
+	btns.forEach((btn) => {
+		if (btn != placeKnightBtn && btn != resetBtn) {
+			btn.disabled = true;
+		}
+	});
+
+	// If there is a knight on the board, remove it
+	const knight = document.querySelector('.knight');
+	const endpoint = document.querySelector('.endpoint');
+	if (knight && endpoint) dom.resetBoard();
+	else if (knight) knight.remove();
+
 	const spaces = document.querySelectorAll('.cell');
 	spaces.forEach((space) => {
 		space.addEventListener('click', function place() {
@@ -41,6 +55,11 @@ placeKnightBtn.addEventListener('click', () => {
 				start = graph.convertElementToNode(space);
 
 				dom.placeKnight(space); // Place Knight Img
+
+				// Enable btns
+				btns.forEach((btn) => {
+					btn.disabled = false;
+				});
 			}
 		});
 	});
@@ -49,7 +68,13 @@ placeKnightBtn.addEventListener('click', () => {
 // Random Knight
 const randomKnight = document.querySelector('.place-random');
 randomKnight.addEventListener('click', () => {
-	if (!document.querySelector('.knight')) {
+	// If there is a knight on the board, remove it
+	const knight = document.querySelector('.knight');
+	const endpoint = document.querySelector('.endpoint');
+	if (knight && endpoint) dom.resetBoard();
+	else if (knight) knight.remove();
+
+	if (!knight) {
 		const rows = document.querySelectorAll('.row');
 		const x = Math.floor(Math.random() * 7);
 		const y = Math.floor(Math.random() * 7);
@@ -64,6 +89,19 @@ randomKnight.addEventListener('click', () => {
 let end;
 const endpointBtn = document.querySelector('.end');
 endpointBtn.addEventListener('click', () => {
+	// Disable other buttons
+	btns.forEach((btn) => {
+		if (btn != endpointBtn && btn != resetBtn) {
+			btn.disabled = true;
+		}
+	});
+
+	// If there is an endpoint on the board, remove it
+	const knight = document.querySelector('.knight');
+	const endpoint = document.querySelector('.endpoint');
+	if (knight && endpoint) dom.resetBoard();
+	else if (endpoint) endpoint.remove();
+
 	const cells = document.querySelectorAll('.cell'); // Get cells
 	// Place 'X' on cell when its clicked
 	cells.forEach((cell) => cell.addEventListener('click', () => {
@@ -73,6 +111,9 @@ endpointBtn.addEventListener('click', () => {
 
 			// Save endpoint, convert end `cell` to corrosponding `Node`
 			end = graph.convertElementToNode(cell);
+
+			// Enable btns
+			btns.forEach((btn) => btn.disabled = false);
 		}
 	}));
 });
@@ -80,7 +121,13 @@ endpointBtn.addEventListener('click', () => {
 // Random Endpoint
 const randomPoint = document.querySelector('.random-end');
 randomPoint.addEventListener('click', () => {
-	if (!document.querySelector('.endpoint')) {
+	// If there is a knight on the board, remove it
+	const knight = document.querySelector('.knight');
+	const endpoint = document.querySelector('.endpoint');
+	if (knight && endpoint) dom.resetBoard();
+	else if (endpoint) endpoint.remove();
+
+	if (!endpoint) {
 		const rows = document.querySelectorAll('.row');
 		const x = Math.floor(Math.random() * 7); // Get random X
 		const y = Math.floor(Math.random() * 7); // Get random Y
