@@ -99,6 +99,8 @@ export class Graph {
 			}
 		}
 
+		this.unvisitNodes();
+
 		return path.reverse();
 	};
 
@@ -131,6 +133,21 @@ export class Graph {
 	 */
 	getNodeFromCoord = (coord) => {
 		return this.nodes[coord[1]][coord[0]];
+	};
+
+	linkToElements = () => {
+		// Get row elements
+		const rows = Array.from(document.querySelectorAll('.row')).reverse();
+
+		// Iterate through row elements and their children
+		for (let y = 0; y < 8; y++) {
+			const row = rows[y];
+
+			for (let x = 0; x < 8; x++) {
+				const cell = row.children[x];
+				this.nodes[y][x].cell = cell;
+			}
+		}
 	};
 }
 
