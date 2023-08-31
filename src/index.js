@@ -37,13 +37,27 @@ placeKnightBtn.addEventListener('click', () => {
 		space.addEventListener('click', function place() {
 			// If theres no knight
 			if (!document.querySelector('.knight')) {
-				dom.placeKnight(space); // Place Knight Img
-
 				// Save start point, convert starting `cell` to corrosponding `Node`
 				start = graph.convertElementToNode(space);
+
+				dom.placeKnight(space); // Place Knight Img
 			}
 		});
 	});
+});
+
+// Random Knight
+const randomKnight = document.querySelector('.place-random');
+randomKnight.addEventListener('click', () => {
+	if (!document.querySelector('.knight')) {
+		const rows = document.querySelectorAll('.row');
+		const x = Math.floor(Math.random() * 7);
+		const y = Math.floor(Math.random() * 7);
+		const cell = rows[y].children[x];
+
+		start = graph.convertElementToNode(cell);
+		dom.placeKnight(cell);
+	}
 });
 
 // Place Endpoint
@@ -67,9 +81,10 @@ endpointBtn.addEventListener('click', () => {
 const randomPoint = document.querySelector('.random-end');
 randomPoint.addEventListener('click', () => {
 	if (!document.querySelector('.endpoint')) {
+		const rows = document.querySelectorAll('.row');
 		const x = Math.floor(Math.random() * 7); // Get random X
 		const y = Math.floor(Math.random() * 7); // Get random Y
-		const cell = rowElements[y].children[x]; // Find cell
+		const cell = rows[y].children[x]; // Find cell
 
 		end = graph.convertElementToNode(cell); // Save and convert cell to node
 
@@ -82,7 +97,7 @@ const gameboard = document.querySelector('.gameboard');
 // Signifies if Knight and Endpoint is on the board
 let k = false;
 let e = false;
-const observer = new MutationObserver((records) => {
+export const observer = new MutationObserver((records) => {
 	records.forEach((record) => {
 		const added = Array.from(record.addedNodes);
 
@@ -101,4 +116,9 @@ const observer = new MutationObserver((records) => {
 	});
 });
 
+// Observe/Listen for Knight and Endpoint to be placed
 observer.observe(gameboard, {childList: true, subtree: true});
+
+// Reset Board
+const resetBtn = document.querySelector('.reset');
+resetBtn.addEventListener('click', dom.resetBoard);

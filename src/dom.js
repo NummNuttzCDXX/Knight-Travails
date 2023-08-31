@@ -1,7 +1,7 @@
 // Dom Manipulation Module
 import knight from '../dist/assets/img/Chess-Knight.svg';
 import close from '../dist/assets/img/close.svg';
-import {graph} from './index';
+import {graph, observer} from './index';
 
 
 export const dom = (() => {
@@ -132,6 +132,8 @@ export const dom = (() => {
 				.querySelector('span').textContent = i;
 
 			animateKnight(next, path, ++i);
+		}).catch(() => {
+			console.error('Error animating Knight');
 		});
 
 		/**
@@ -147,5 +149,31 @@ export const dom = (() => {
 		}
 	};
 
-	return {placeKnight, placeEndpoint, knightMoves};
+	/** Reset the Gameboard */
+	const resetBoard = () => {
+		// Remove Knight
+		const knight = document.querySelector('.knight');
+		if (knight) knight.remove();
+
+		// Remove Endpoint
+		const endpoint = document.querySelector('.endpoint');
+		if (endpoint) endpoint.remove();
+
+		// Remove Move Numbers inside cells
+		const cells = document.querySelectorAll('.cell');
+		cells.forEach((cell) => cell.querySelector('span').textContent = '');
+
+		// Clone and replace Gameboard to remove all event listeners from Cells
+		const oldBoard = document.querySelector('.gameboard');
+		const newBoard = oldBoard.cloneNode(true);
+		oldBoard.replaceWith(newBoard);
+
+		// Observe new Gameboard
+		observer.observe(newBoard, {childList: true, subtree: true});
+
+		// Relink Nodes to new Cells
+		graph.linkToElements();
+	};
+
+	return {placeKnight, placeEndpoint, knightMoves, resetBoard};
 })();
