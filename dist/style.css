@@ -150,3 +150,25 @@ footer {
 	transition: .8s;
 	transform: rotate(2turn) scale(1.2);
 }
+
+/* For Smaller screens */
+@media screen and (max-width: 750px) {
+	.content {
+		flex-direction: column;
+	}
+
+	.console-wrapper {
+		height: 30vh;
+	}
+
+	.console {
+		height: auto;
+	}
+
+	.gameboard {
+		max-width: 90vw;
+		width: 90vw;
+		max-height: 90vw;
+		height: 90vw;
+	}
+}
