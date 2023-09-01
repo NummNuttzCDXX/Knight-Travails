@@ -192,6 +192,12 @@ footer {
 		flex-direction: column;
 	}
 
+	.left {
+		max-width: none;
+		width: 100vw;
+		flex-direction: row;
+	}
+
 	.console-wrapper {
 		height: 30vh;
 	}
