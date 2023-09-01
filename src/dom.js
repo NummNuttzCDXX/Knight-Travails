@@ -167,6 +167,7 @@ export const dom = (() => {
 		const oldBoard = document.querySelector('.gameboard');
 		const newBoard = oldBoard.cloneNode(true);
 		oldBoard.replaceWith(newBoard);
+		checkBoardSize(); // Make width == height if they are not
 
 		// Observe new Gameboard
 		observer.observe(newBoard, {childList: true, subtree: true});
@@ -180,5 +181,20 @@ export const dom = (() => {
 		});
 	};
 
-	return {placeKnight, placeEndpoint, knightMoves, resetBoard};
+	/**
+	 * Check if the width and height of the board are the same
+	 * - If they are different, make the height match the width
+	 * (width should be 50vw)
+	 */
+	const checkBoardSize = () => {
+		const board = document.querySelector('.gameboard');
+		const height = board.clientHeight; // Get Height
+		const width = board.clientWidth; // Get Width
+
+		// If they're not equal, make them equal
+		if (width > height) board.style.width = height + 'px';
+		else if (height > width) board.style.height = width + 'px';
+	};
+
+	return {placeKnight, placeEndpoint, knightMoves, resetBoard, checkBoardSize};
 })();

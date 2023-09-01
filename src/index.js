@@ -5,6 +5,9 @@ import {Graph, Node} from './graph';
 import {dom} from './dom';
 
 
+// Make sure width == height (depending on screen size)
+dom.checkBoardSize();
+
 // Create `Graph` Array from gameboard cells
 const board = [];
 const rowElements = Array.from(document.querySelectorAll('.row')).reverse();
