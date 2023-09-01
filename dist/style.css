@@ -10,6 +10,11 @@
 	/* Colors */
 	--dark-cell: rgb(33, 32, 32);
 	--light-cell: aliceblue;
+	--background: rgb(245, 247, 220);
+	--charcoal: rgb(64, 67, 78);
+	--wine: rgb(112, 38, 50);
+	--blue: rgb(25, 143, 159);
+	--gray: rgb(141, 161, 185);
 }
 
 body {
@@ -21,6 +26,9 @@ body {
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
+
+	background-color: var(--background);
+	color: var(--blue);
 }
 
 /* Content Container */
@@ -30,6 +38,26 @@ body {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+}
+
+.left {
+	max-width: 50vw;
+}
+
+header {
+	padding: 0 1rem;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+h1 {
+	text-align: center;
+}
+
+p {
+	width: 80%;
 }
 
 .console-wrapper {
@@ -56,12 +84,19 @@ body {
 
 	border: 2px solid var(--dark-cell);
 	border-radius: .5rem;
+	background: var(--charcoal);
+	color: var(--gray);
 }
 
 .console button {
 	width: 70%;
 	min-width: fit-content;
 	font-size: .7rem;
+
+	background-color: var(--gray);
+	color: var(--wine);
+	border-radius: .5rem;
+	border: 2px solid var(--wine);
 }
 
 .place-random {
@@ -79,8 +114,8 @@ body {
 	margin-top: .5em;
 	margin-right: .5em;
 	max-height: 50vw;
-	height: 80vh;
-	width: 80vh;
+	height: 70vh;
+	width: 70vh;
 	max-width: 50vw;
 
 	display: flex;
